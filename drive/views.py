@@ -5,12 +5,13 @@ from passlib.context import CryptContext
 import PyPDF2 
 import io
 from pptx import Presentation
-import nltk
-from nltk.corpus import stopwords
-from nltk.stem import PorterStemmer 
 import string
 import validators
 from django.db.models import Q
+import nltk
+from nltk.corpus import stopwords
+from nltk.stem import PorterStemmer 
+nltk.download('stopwords')
 pwd_context = CryptContext(
         schemes=["pbkdf2_sha256"],
         default="pbkdf2_sha256",
