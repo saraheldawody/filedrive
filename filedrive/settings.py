@@ -25,7 +25,7 @@ SECRET_KEY = 'fvt@r(p8w^u08op02cx2f_1^6f+3yt2g-o$9#c7rvszpo9al+a'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['filedriveapp.herokuapp.com']
 
 
 # Application definition
