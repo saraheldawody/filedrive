@@ -195,7 +195,10 @@ def upload(request):
                         content.append(shape.text)
             print(content)
         else:
-            print("invalid file type")
+            context={
+                'err':'Please Upload only PDF and Power Point Files with exetension (.pdf, .pptx).'
+                }
+            return render(request, 'upload.html',context)
         strings_dict={}
         
         if content != []:
