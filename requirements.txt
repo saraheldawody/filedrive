@@ -11,7 +11,7 @@ click==7.1.2
 colorama==0.4.3
 dataclasses==0.6
 decorator==4.4.2
-Django==2.2.13
+django==3.0.7
 django-cleanup==5.1.0
 django-cors-headers==3.5.0
 django-phonenumber-field==4.0.0
