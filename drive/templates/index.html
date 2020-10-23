@@ -1,0 +1,85 @@
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <title>File Drive</title>
+        <style>
+            #box{
+                padding:2em;
+                margin: 2em;
+            }
+            .row {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding-top: 1em;
+            }
+        </style>
+    </head>
+    <body>
+        {% if loggedin %}
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+              <div class="navbar-header">
+                <a class="navbar-brand" href="/">File Drive</a>
+              </div>
+              <ul class="nav navbar-nav" style="float: right;">
+                <li class="active"><a href="/">Home</a></li>
+                <li><a href="files/">Files</a></li>
+                <li><a href="upload/">Upload File</a></li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Account
+                    <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                      <li><a href="profile/">Edit Profile</a></li>
+                      <li><a href="signout/">Sign Out</a></li>
+                    </ul>
+                  </li>
+              </ul>
+            </div>
+          </nav>
+          <div class="container" id='box'>
+            <div class="row">
+                <div class="col-3"></div>
+                <div class="col-6">
+                    <div class="row"><h1>This is Your Space in FileDrive</h1></div>
+                    <div class="row"><h3>You can Upload, Search, and Download files in your working space.</h3></div>
+                    <div class="row"><h3>Available File Types that you can upload and search their content is</h3></div>
+                    <div class="row"><h3>Powerpoints and PDFs</h3></div>
+                    <div class="row"><h3>Navigate the files you uploaded and search them in files page.</h3></div>
+                    <div class="row"><h3> you can upload new file in upload page.</h3></div>
+                </div>
+                <div class="col-3"></div>
+            </div>
+        </div>
+        {% else %}
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+              <div class="navbar-header">
+                <a class="navbar-brand" href="/">File Drive</a>
+              </div>
+              <ul class="nav navbar-nav" style="float: right;">
+                <li class="active"><a href="/">Home</a></li>
+                <a class="btn btn-primary" style="margin-top: 0.5em;" href="signin/">Login</a>
+              </ul>
+            </div>
+          </nav>
+        <div class="container" id='box'>
+            <div class="row">
+                <div class="col-3"></div>
+                <div class="col-6">
+                    <div class="row"><h1>Welcome To File Drive</h1></div>
+                    <div class="row"><h3>If You are New Memeber You can Register through link below</h3></div>
+                    <div class="row"><a class="btn btn-primary" href="register/">Register</a></div>
+                    <div class="row"><h3>If You are a Memeber You can Login through link below</h3></div>
+                    <div class="row"><a class="btn btn-primary" href="signin/">Login</a></div>
+                </div>
+                <div class="col-3"></div>
+            </div>
+        </div>
+        {% endif %}
+    </body>
+</html>

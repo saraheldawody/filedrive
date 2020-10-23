@@ -1,0 +1,136 @@
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <title>File Drive</title>
+        <style>
+            #box{
+                padding:2em;
+                margin: 2em;
+            }
+            .row {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding-top: 1em;
+            }
+            .loader {
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 80px;
+  height: 80px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+        </style>
+    </head>
+    <body>
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+              <div class="navbar-header">
+                <a class="navbar-brand" href="/">File Drive</a>
+              </div>
+              <ul class="nav navbar-nav" style="float: right;">
+                <li ><a href="/">Home</a></li>
+                <li><a href="../files/">Files</a></li>
+                <li class="active"><a href="../upload/">Upload File</a></li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Account
+                    <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                      <li><a href="../profile/">Edit Profile</a></li>
+                      <li><a href="../signout/">Sign Out</a></li>
+                    </ul>
+                  </li>
+              </ul>
+            </div>
+          </nav>
+          <div class="container" id='box'>
+            <div class="row">
+                <div class="col-3"></div>
+                <div class="col-6">
+                    {% if msg %}
+                    <div class="row" style="background-color: rgb(45, 182, 45);">
+                        <ul>
+                            <li>
+                                {{msg}}
+                            </li>
+                        </ul>
+                    </div>
+                    {% endif %}
+                    {% if err %}
+                    <div class="row" style="background-color: rgb(221, 129, 129);">
+                        <ul>
+                            <li>
+                                {{err}}
+                            </li>
+                        </ul>
+                    </div>
+                    {% endif %}
+                    <div id="loading" class="row" style="display: none;">
+                        <div class="loader"></div>
+                        <div>Uploading</div>
+                    </div>
+                    <form id="uploadForm" action="../upload/" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-3">
+                                <label for="title">File Title</label>
+                            </div>
+                            <div class="col-9">
+                                <input class="form-control" type="text" name="title" id="title" required="required" >
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-3">
+                                <label for="description">Description</label>
+                            </div>
+                            <div class="col-9">
+                                <textarea name="description" id="description" cols="30" rows="10" required="required" ></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-3">
+                                <label for="file">file</label>
+                            </div>
+                            <div class="col-9">
+                                <input class="form-control" type="file" name="file" id="file" required="required" >
+                            </div>
+                        </div>
+                        <div class="row">
+                            <button type="submit" class="btn btn-primary"  >Upload</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-3"></div>
+            </div>
+        </div>
+        <div id="loader-wrapper" style="display: none;">
+            <div id="loader"></div>
+         
+            <div class="loader-section section-left"></div>
+            <div class="loader-section section-right"></div>
+         
+        </div>
+        <script>
+            $("#uploadForm").submit(function (e) {
+                $("#loading").show();
+            });
+        </script>
+    </body>
+</html>

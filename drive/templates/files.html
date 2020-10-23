@@ -1,0 +1,136 @@
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        <title>File Drive</title>
+  
+    </head>
+    <body>
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+              <div class="navbar-header">
+                <a class="navbar-brand" href="/">File Drive</a>
+              </div>
+              <ul class="nav navbar-nav" style="float: right;">
+                <li ><a href="/">Home</a></li>
+                <li class="active"><a href="../files/">Files</a></li>
+                <li><a href="../upload/">Upload File</a></li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Account
+                    <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                      <li><a href="../profile/">Edit Profile</a></li>
+                      <li><a href="../signout/">Sign Out</a></li>
+                    </ul>
+                  </li>
+              </ul>
+            </div>
+          </nav>
+          <div class="container" >
+              <div class="row">
+                  <dv class="col-md-5"></dv>
+                      <form action="../files/" method="post">
+                        {% csrf_token %}
+                        <input  type="text" placeholder="Search.." name="search" value="{{search}}">
+                        <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i></button>
+                    </form>
+              </div>
+            <div class="row">
+                <div class="col-12">
+                    
+                    <div class="row" style="margin: 0.5em;">
+                        {% for file in files %}
+                        <div class="col-md-2" style="background-color: rgb(206, 205, 205);margin: 1em;height: 22em;">
+                            <div class="row"style="padding:0.2em;display: flex;align-items: center;justify-content: center;padding-top: 1em;">
+                                {% if file.extension == 'PDF' %}
+                                <img style="width: 10em;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/PDF_file_icon.svg/833px-PDF_file_icon.svg.png" alt="" >
+                                {% else %}
+                                <img style="width: 10em;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/.pptx_icon_%282019%29.svg/1200px-.pptx_icon_%282019%29.svg.png" alt="" >
+                                {% endif %}
+                            </div>
+                            <div class="row" style="padding:0.2em;display: flex;align-items: center;justify-content: center;padding-top: 1em;">
+                                <h3 style="text-align: center; font-size: 1em;font-weight: bold;">{{file.Title}}</h3>
+                            </div>
+                            <div class="row" style="padding:0.2em;display: flex;align-items: center;justify-content: center;padding-top: 1em;">
+                                <div class="col-4"  style="display: inline;padding:0.2em;">
+                                    <a href="{{file.File.url}}"><i class="fa fa-download"></i></a>
+                                </div>
+                                <div class="col-4"  style="display: inline;padding:0.2em;">
+                                    <a onclick='view("{{file.Description}}","{{file.Title}}","{{file.File.url}}")'><i  class="fa fa-eye" style="font-size: large;"></i></a>
+                                </div>
+                                <div class="col-4"  style="display: inline;padding:0.2em;">
+                                    <a onclick="del({{file.id  | safe}},'{{file.Title}}')"><i class="fa fa-trash"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+
+        <div  id="delete" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Delete File</h5>
+                  <button type="button" class="close" data-dismiss="modal" onclick="closedelete()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <p>Are You Sure You want to delete <span id="todelete"></span> file?</p>
+                </div>
+                <div class="modal-footer">
+                  <a id="delbtn" href="#" type="button" class="btn btn-danger">Delete</a>
+                  <button type="button" class="btn btn-secondary" onclick="closedelete()" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div  id="view" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 id="filetitle" class="modal-title"></h5>
+                  <button type="button" class="close" onclick="closeview()" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <p id="description"></p>
+                </div>
+                <div class="modal-footer">
+                    <a id="filelink" href="#" type="button" class="btn btn-primary" onclick="$('#view').hide()">Download</a>
+                  <button type="button" class="btn btn-secondary" onclick="closeview()" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        <script>
+            function view(description,title,url){
+                $("#filetitle").text(title);
+                $("#description").text(description);
+                $("#filelink").attr("href", url);
+                $("#view").show();
+            }
+            function closeview(){
+                $("#view").hide();
+            }
+            function closedelete(){
+                $("#delete").hide();
+            }
+            function del(id,title){
+                $("#todelete").text(title);
+                $("#delbtn").attr("href", "../delete/"+id);
+                $("#delete").show();
+            }
+        </script>
+    </body>
+</html>

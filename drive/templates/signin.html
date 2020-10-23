@@ -1,0 +1,75 @@
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <title>File Drive: Sign In</title>
+        <style>
+            #box{
+                padding:2em;
+                margin: 2em;
+            }
+            .row {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding-top: 1em;
+            }
+        </style>
+    </head>
+    <body>
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+              <div class="navbar-header">
+                <a class="navbar-brand" href="/">File Drive</a>
+              </div>
+              <ul class="nav navbar-nav" style="float: right;">
+                <li class="active"><a href="/">Home</a></li>
+                <a class="btn btn-primary" style="margin-top: 0.5em;" href="../signin/">Login</a>
+              </ul>
+            </div>
+          </nav>
+        <div class="container" id='box'>
+            <div class="row">
+                <div class="col-3"></div>
+                <div class="col-6">
+                    <div class="row"><h1>Welcome Back To File Drive</h1></div>
+                    <form action="../signin/" method="post">
+                        {% csrf_token %}
+                        {% if error %}
+                        <div class="row" style="background-color: rgb(245, 79, 79);">
+                            <ul>
+                                <li>
+                                    {{error}}
+                                </li>
+                            </ul>
+                        </div>
+                        {% endif %}
+                        <div class="row">
+                            <div class="col-3">
+                                <label for="Email">Email</label>
+                            </div>
+                            <div class="col-9">
+                                <input class="form-control" type="email" name="Email" id="Email" value="{{email}}" required>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-3">
+                                <label for="Email">Password</label>
+                            </div>
+                            <div class="col-9">
+                                <input class="form-control" type="password" name="Password" id="Password" required>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <input class="btn btn-primary" type="submit" value="Login">
+                        </div>
+                    </form>
+                </div>
+                <div class="col-3"></div>
+            </div>
+        </div>
+    </body>
+</html>
